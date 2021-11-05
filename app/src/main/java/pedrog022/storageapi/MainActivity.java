@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void executeTests() {
-        //TODO: The \n problem happens while reading the file
         //Folder exists
         append("Verifying folder existence and type");
 
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             appendError(e);
         }
 
-        //TODO: @SDKCase2: Copied file have one exceeding byte (?)
         //Copy file
         append("Copying file");
         try {

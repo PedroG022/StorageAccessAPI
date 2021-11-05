@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -17,11 +18,15 @@ import org.jsoup.Jsoup;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
@@ -166,26 +171,19 @@ public class StorageAccess {
         public String readFile(String filepath) throws IOException {
             DocumentFile file = findFileOnFolder(filepath);
 
-            ContentResolver resolver = context.getContentResolver();
+            if (findFileOnFolder(filepath) == null)
+                throw new FileNotFoundException("File to be read was not found");
 
-            InputStream inputStream = resolver.openInputStream(file.getUri());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
+            ParcelFileDescriptor pfd = context.getContentResolver()
+                    .openFileDescriptor(file.getUri(), "r");
 
-            String string = "";
+            byte[] data = new byte[(int) pfd.getStatSize()];
 
-            while (true) {
-                try {
-                    if ((string = reader.readLine()) == null) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                stringBuilder.append(string).append("\n");
-            }
-            inputStream.close();
+            FileDescriptor fd = pfd.getFileDescriptor();
+            FileInputStream fileStream = new FileInputStream(fd);
+            fileStream.read(data);
 
-            Utils.log("fileContent:\n---\n%s\n---", stringBuilder.toString());
-            return stringBuilder.toString();
+            return new String(data);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
