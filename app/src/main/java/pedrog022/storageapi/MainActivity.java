@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             appendError(e);
         }
 
-        //TODO: @SDKCase2: "\n" is being added to the end of the file
         //Write file
         append("Writing to the created file");
         try {
