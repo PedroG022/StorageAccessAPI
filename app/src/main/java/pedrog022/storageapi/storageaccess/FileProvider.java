@@ -15,8 +15,6 @@ public interface FileProvider {
 
     void createFolder(String folderPath) throws Exception;
 
-    void moveFile(String filepath, String folderPath) throws Exception;
-
     void deleteFile(String filepath) throws Exception;
 
     void cleanFolder(String folderPath) throws Exception;

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void executeTests() {
+        //TODO: The \n problem happens while reading the file
         //Folder exists
         append("Verifying folder existence and type");
 
@@ -143,17 +144,6 @@ public class MainActivity extends AppCompatActivity {
             appendError(e);
         }
 
-        //Moving contents
-        //TODO: @SDKCase2: Unknown error
-        append("Moving files to the created subfolder");
-        try {
-            fileProvider.moveFile(filepath + "/Test.txt", filepath + "/Folder/");
-            fileProvider.moveFile(filepath + "/TestRenamed.txt", filepath + "/Folder/");
-
-
-        } catch (Exception e) {
-            appendError(e);
-        }
     }
 
 

@@ -292,14 +292,6 @@ public class StorageAccess {
             DocumentFile targetFile = findFileOnFolder(newFilepath);
             writeFile(newFilepath, readFile(originalFilepath));
         }
-
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void moveFile(String filepath, String folderPath) throws Exception {
-            String fileName = filepath.substring(filepath.lastIndexOf("/") + 1);
-            copyFile(filepath, sanitizePath(folderPath) + "/" + fileName);
-            deleteFile(filepath);
-        }
     }
 
     private static class KitKatFiles implements FileProvider {
@@ -434,7 +426,6 @@ public class StorageAccess {
             FileUtils.copyFile(originalFile, newFile);
         }
 
-        @Override
         public void moveFile(String filepath, String folderPath) throws Exception {
             File originalFile = new File(base + filepath);
             File targetDirectory = new File(base + folderPath);
