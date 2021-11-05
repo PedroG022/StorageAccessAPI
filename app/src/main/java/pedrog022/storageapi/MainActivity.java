@@ -53,20 +53,24 @@ public class MainActivity extends AppCompatActivity {
         if (fileProvider.exists(filepath)) {
             append("Path exists, verifying type");
 
-            if (fileProvider.isFolder(filepath))
+            if (fileProvider.isFolder(filepath)) {
                 append("Ok, path is a directory");
-            else append("Path is a file!");
+                folderExists();
+            } else append("Path is a file!");
         } else {
-            append("Folder doesn't exists, trying to create it");
+            append("Folder doesn't exist, trying to create it");
 
             try {
                 fileProvider.createFolder(filepath);
                 append("Folder created!");
+                folderExists();
             } catch (Exception e) {
                 appendError(e);
             }
         }
+    }
 
+    private void folderExists() {
         //List contents
         try {
             append("Listing folder content: " + Arrays.toString(fileProvider.getFolderContent(filepath)));
@@ -135,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             appendError(e);
         }
-
     }
 
 
