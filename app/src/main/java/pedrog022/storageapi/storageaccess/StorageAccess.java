@@ -291,17 +291,18 @@ public class StorageAccess {
             return wrapper.exists(filePath);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void copyFile(String originalFilepath, String newFilepath) throws Exception {
-            DocumentFile originalFile = findFileOnFolder(originalFilepath);
-
             String targetPath = newFilepath.substring(0, newFilepath.lastIndexOf("/"));
             String newFilename = newFilepath.substring(newFilepath.lastIndexOf("/") + 1);
+
             DocumentFile targetFolder = file(targetPath);
 
+            if (targetFolder.findFile(newFilename) != null)
+                throw new FileAlreadyExistsException("Target copy file already exists!");
+
             targetFolder.createFile("text", newFilename);
-            DocumentFile targetFile = findFileOnFolder(newFilepath);
             writeFile(newFilepath, readFile(originalFilepath));
         }
     }

@@ -99,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
             appendError(e);
         }
 
-        //TODO: @SDKCase2: File is duplicated if it already exists
         //TODO: @SDKCase2: Copied file have one exceeding byte (?)
-        //TODO: @SDKCase0: #FIXED (Caused by the base path not being added to the file path)  Destination directory "StorageAccess" cannot be created
         //Copy file
         append("Copying file");
         try {
