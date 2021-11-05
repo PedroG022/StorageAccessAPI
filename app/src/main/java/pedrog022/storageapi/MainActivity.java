@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getInfo();
-        executeTests();
+        binding.button.setOnClickListener(v -> executeTests());
     }
 
     public void append(String text) {
