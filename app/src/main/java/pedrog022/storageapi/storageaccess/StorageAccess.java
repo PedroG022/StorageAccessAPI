@@ -188,6 +188,7 @@ public class StorageAccess {
             return stringBuilder.toString();
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void createFolder(String folderPath) throws Exception {
             folderPath = sanitizePath(folderPath);
@@ -198,7 +199,10 @@ public class StorageAccess {
             DocumentFile upperFolder = file(upperFolderPath);
 
             if (upperFolder != null) {
-                upperFolder.createDirectory(targetFolder);
+                if (upperFolder.findFile(targetFolder) != null)
+                    throw new FileAlreadyExistsException("Folder to be created already exists!");
+                else
+                    upperFolder.createDirectory(targetFolder);
             } else
                 throw new Exception(String.format("The upper folder (%s) is null!", upperFolderPath));
         }

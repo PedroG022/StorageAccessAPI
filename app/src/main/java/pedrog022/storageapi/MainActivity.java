@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             appendError(e);
         }
 
-        //TODO: @SDKCase2: Created folder creating copies if a folder with same name exists
         //Create a folder
         append("Creating a folder");
         try {
