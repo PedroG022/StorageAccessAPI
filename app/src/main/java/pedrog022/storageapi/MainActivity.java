@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
             appendError(e);
         }
 
-        //TODO: @SDKCase2: Renamed file creating copies if a file with same name exists
-        //TODO: @SDKCase0:  #FIXED (Same cause, base path wasn't being added to the new one) Unable to rename (Unknown)
         //Rename file
         append("Renaming copy file");
         try {

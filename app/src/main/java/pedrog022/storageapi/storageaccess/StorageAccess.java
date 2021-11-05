@@ -245,9 +245,17 @@ public class StorageAccess {
 
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void renameFile(String filepath, String newName) throws Exception {
             DocumentFile file = findFileOnFolder(filepath);
+
+            String folder = filepath.substring(0, filepath.lastIndexOf("/"));
+
+            DocumentFile rootFolder = file(folder);
+            if (rootFolder.findFile(newName) != null)
+                throw new FileAlreadyExistsException("File to be renamed already exists!");
+
             file.renameTo(newName);
         }
 
