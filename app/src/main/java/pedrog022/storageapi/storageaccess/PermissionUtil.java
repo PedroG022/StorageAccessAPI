@@ -151,9 +151,6 @@ public class PermissionUtil {
             for (UriPermission permission : permissions) {
                 String decodedUri = Uri.decode(permission.getUri().toString());
 
-                Log.d("dbg", "decodedURI = " + permission.getUri());
-                Log.d("dbg", "path = " + path);
-
                 if (decodedUri.contains(path)) {
                     found_permission = true;
                     break;
@@ -165,7 +162,7 @@ public class PermissionUtil {
 
         private static boolean dialogShown = false;
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         private static void askForMissingPermissions(Context context) {
             int missingPermissions = 0;
 
@@ -181,7 +178,7 @@ public class PermissionUtil {
                         for (String permission : requiredStoragePermissions) {
                             if (!isFilePermissionGranted(context, permission)) {
                                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                                intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Utils.getOpenIntentPathUri(permission));
+                                intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, Utils.getPathUri(context, permission));
                                 permissionsAndLaunchers.get(permission).launch(intent);
                             }
                         }
