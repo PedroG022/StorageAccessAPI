@@ -16,12 +16,13 @@ public class MainActivity extends AppCompatActivity {
     private FileProvider fileProvider;
     private String filepath;
     private ActivityMainBinding binding;
+    private StorageAccess storageAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         filepath = "StorageAccess";
 
-        StorageAccess storageAccess =
+        storageAccess =
                 new StorageAccess(this, new String[]{filepath});
 
         storageAccess.init();
@@ -139,6 +140,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             appendError(e);
         }
+
+        //Download file
+        append("Downloading file");
+        storageAccess.downloadFile("https://google.com", filepath + "/Downloaded.txt",
+                true,
+                () -> append("Download complete!"),
+                () -> append("An error occurred!"));
+
     }
 
 
