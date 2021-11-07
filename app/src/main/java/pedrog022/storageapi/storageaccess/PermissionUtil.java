@@ -49,7 +49,7 @@ public class PermissionUtil {
                 permissionsOk();
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (Scoped.areAllNeededPermissionsOk(context)) {
+            if (!Scoped.areAllNeededPermissionsOk(context)) {
                 Scoped.askForMissingPermissions(context);
             } else {
                 permissionsOk();
