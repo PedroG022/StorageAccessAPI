@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -80,7 +81,7 @@ public class StorageAccess {
     public FileProvider getFileProvider() {
         switch (SDK_CASE()) {
             case 1:
-                return new LollipopFiles();
+                return new LollipopFiles(context);
             case 2:
                 return new QFiles().init(context);
             case 0:
@@ -132,9 +133,19 @@ public class StorageAccess {
     /*--------------------------------------------------------------------------------------------*/
 
     public static class LollipopFiles extends KitKatFiles {
+        private final Context context;
+
         @Override
         public String name() {
             return "LollipopFiles";
+        }
+
+        public LollipopFiles(Context context) {
+            this.context = context;
+        }
+
+        public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            PermissionUtil.Normal.onActivityResultOverride(context, requestCode, grantResults);
         }
     }
 

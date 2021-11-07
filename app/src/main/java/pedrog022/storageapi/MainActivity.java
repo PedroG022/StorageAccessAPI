@@ -1,5 +1,6 @@
 package pedrog022.storageapi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
@@ -150,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        new StorageAccess.LollipopFiles(this).onRequestPermissionResult(requestCode, permissions, grantResults);
+    }
 
     public void getInfo() {
         String infoText =
